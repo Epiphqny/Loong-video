@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Loong: Generating Minute-level Long Videos with Autoregressive Language Models">
+  <meta name="keywords" content="Loong, Long Video Generation, Autoregressive Language Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loong: Generating Minute-level Long Videos with Autoregressive Language Models</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QCJY998LVV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-QCJY998LVV');
+  </script>
+  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .card-image video {
+      width: 150%;
+      height: 150%;
+      object-fit: cover;
+    }
+    .gif-card .card-image {
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .gif-card .card-image img {
+      object-fit: cover;
+    }
+    .gif-card .card-content {
+      width: 100%;
+    }
+    .smaller-text {
+      font-size: 0.8rem;
+    }
+    .smallest-text {
+      font-size: 0.5rem;
+    }
+    .section-divider {
+    border-top: 1px solid #dbdbdb;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+  .wider-video-container {
+    max-width: 1600px !important;  /* Increase this value to make the container wider */
+    width: 90% !important;  /* This ensures some margin on very wide screens */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .wider-column {
+    padding: 0.75rem;
+  }
+    
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Loong: Generating Minute-level Long Videos with Autoregressive Language Models</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block has-text-centered">
+              <a href="https://scholar.google.com/citations?user=QC7nNe0AAAAJ&hl=zh-CN">Yuqing Wang</a><sup>1</sup>,
+              <a href="https://github.com/SilentView">Tianwei Xiong</a><sup>1</sup>,
+              <a href="https://zhoudaquan.github.io/homepage.io/index.html">Daquan Zhou</a><sup>2</sup><a href="#"><i class="fas fa-envelope"></i></a>,
+              <a href="https://scholar.google.com/citations?user=xXMj6_EAAAAJ&hl=zh-CN">Zhijie Lin</a><sup>2</sup><br><br>
+              <a href="https://scholar.google.com/citations?user=uPmTOHAAAAAJ&hl=zh-CN">Yang Zhao</a><sup>2</sup>,
+              <a href="https://bingykang.github.io/">Bingyi Kang</a><sup>2</sup>,
+              <a href="https://sites.google.com/site/jshfeng/home">Jiashi Feng</a><sup>2</sup>,
+              <a href="https://xh-liu.github.io/">Xihui Liu</a><sup>1</sup><a href="#"><i class="fas fa-envelope"></i></a><br><br>
+              <sup>1</sup>University of Hong Kong, <sup>2</sup>ByteDance
+            </span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- Arxiv Link. -->
+              <span class="link-block">
+                <span class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            It is desirable but challenging to generate content-rich long videos in the scale of minutes. Autoregressive large language models (LLMs) have achieved great success in generating coherent and long sequences of tokens in the domain of natural language processing, while the exploration of autoregressive LLMs for video generation is limited to generating short videos of several seconds. In this work, we conduct a deep analysis of the challenges that prevent autoregressive LLM-based video generators from generating long videos. Based on the observations and analysis, we propose Loong, a pioneering autoregressive LLM-based video generator that can generate minute-long videos. Specifically, we model the text tokens and video tokens as a unified sequence for autoregressive LLMs and train the model from scratch. We propose progressive short-to-long training with a loss re-weighting scheme to mitigate the loss imbalance problem for long video training. We further investigate inference strategies, including video token re-encoding and sampling strategies, to diminish error accumulation during inference. Our proposed Loong can be trained on 10-second videos and be extended to generate minute-level long videos conditioned on text prompts, as demonstrated by the results.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Framework. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Approach</h2>
+        <div class="content has-text-centered">
+          <img src="static/images/architecture.jpg" alt="Framework" width="80%">
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Given the input text tokens, the model predict video tokens autoregressively. All the text and video information is formulated into a unidirectional discrete token sequence, where the model predicts the next token based on the previous tokens. Video Tokenizer is utlized to convert video frames into discrete video tokens. We follow a progressive training pipeline to train on long videos. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Framework. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="wider-video-container">
+  <!-- <div class="container is-max-desktop"> -->
+  <!-- <div class="container is-max-desktop"> -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- Generated Videos -->
+        <h2 class="title is-3">Generated High-Resolution Videos</h2>
+        <div class="columns is-multiline">
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/fish.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>Clown fish swimming through the coral reef</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/blue_dome.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smallest-text"> Aerial view of Santorini during the blue hour, showcasing the stunning architecture of white Cycladic buildings with blue domes. The caldera views are breathtaking, and the lighting creates a beautiful, serene atmosphere</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/panda_eat.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>A panda eating bamboo on a rock</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/hulk.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>Hulk wearing virtual reality goggles</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/bigfoot.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>A bigfoot walking in the snowstorm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/panda.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>Two pandas sitting at a table playing cards</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/reading_15s.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>Two raccoons reading books in NYC Times Square</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/koala_12s.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>A koala bear playing piano in the forest</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div class="card">
+              <div class="card-image">
+                <video controls>
+                  <source src="videos/panda_12s.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p>A panda standing on a surfboard in the ocean in sunset</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/ Generated Videos -->
+
+        <div class="section-divider"></div>
+
+        <!-- Reconstructed videos using the discrete video tokenizer -->
+        <h2 class="title is-3">Reconstructed videos using the discrete video tokenizer</h2>
+        <p class="subtitle is-6 mb-4">Left: original video, Right: reconstructed video</p>
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons1.gif" alt="Reconstructed video 1">
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons2.gif" alt="Reconstructed video 2">
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons3.gif" alt="Reconstructed video 3">
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons4.gif" alt="Reconstructed video 4">
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons5.gif" alt="Reconstructed video 5">
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/recons6.gif" alt="Reconstructed video 6">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            The discrete video tokenizer is utilized to convert the raw video frames into compact discrete tokens, which can then be processed by the autoregressive language model. The tokenizer is trained using a 3D causal CNN architecture, where the encoder maps the video frames into a discrete latent space, and the decoder reconstructs the original frames from the discrete tokens. The tokenizer can significantly compress the data size. For example, given a 17x128x128 video clip, we compress it by 4 times in the temporal dimension and 8 times in the spatial dimensions (height and width). This allows us to represent the clip using only 5*256 tokens. The GIFs above show the reconstruction quality of videos from the WebVid dataset after compression by our tokenizer. 
+          </p>
+        </div>
+        <!--/ Reconstructed videos using the discrete video tokenizer -->
+
+        <div class="section-divider"></div>
+
+        <!-- Generated Low Resolution Videos with High Motion -->
+        <h2 class="title is-3">Generated Low-Resolution Short Videos(128x128)</h2>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/A_happy_elephant_wearing_a_birthday_hat_walking_under_the_sea.gif" alt="A happy elephant wearing a birthday hat walking under the sea">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">A happy elephant wearing a birthday hat walking under the sea</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/A_big_futuristic_robot_walking_in_post_apocalypse_world.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">A big futuristic robot walking in post apocalypse world</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/cat.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">A white and orange tabby cat is seen happily darting through a dense garden, as if chasing something.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/A_bear_is_giving_a_presentation_in_classroom.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">A bear is giving a presentation in classroom.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/astronaut.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">An astronaut typing on a keyboard, arc shot.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/Teddy_bear_walking_down_5th_Avenue,_front_view,_beautiful_sunset.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">Teddy bear walking down 5th Avenue, front view, beautiful sunset.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/Red_sports_car_coming_around_a_bend_in_a_mountain_road.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">Red sports car coming around a bend in a mountain road.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-one-quarter">
+            <div class="card gif-card">
+              <div class="card-image">
+                <img src="videos/Drone_view_of_waves_crashing_against_the_rugged_cliffs_along_Big_Sur’s_garay_point_beach.gif" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content">
+                  <p class="smaller-text">Drone view of waves crashing against the rugged cliffs along Big Sur’s garay point beach.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--/ Generated Low Resolution Videos with High Motion -->
+
+      </div>
+    </div>
+  </div>  
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The template is borrowed from <a href="https://nerfies.github.io/">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
