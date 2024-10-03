@@ -347,7 +347,7 @@
         </div>
         <div class="content has-text-justified">
           <p>
-            The discrete video tokenizer is utilized to convert the raw video frames into compact discrete tokens, which can then be processed by the autoregressive language model. The tokenizer is trained using a 3D causal CNN architecture, where the encoder maps the video frames into a discrete latent space, and the decoder reconstructs the original frames from the discrete tokens. The tokenizer can significantly compress the data size. For example, given a 17x128x128 video clip, we compress it by 4 times in the temporal dimension and 8 times in the spatial dimensions (height and width). This allows us to represent the clip using only 5*256 tokens. The GIFs above show the reconstruction quality of videos from the WebVid dataset after compression by our tokenizer. 
+            The discrete video tokenizer is utilized to convert the raw video frames into compact discrete tokens, which can then be processed by the autoregressive language model. The tokenizer is trained using a 3D causal CNN architecture, where the encoder maps the video frames into a discrete latent space, and the decoder reconstructs the original frames from the discrete tokens. The tokenizer can significantly compress the data size. For example, given a 17x128x128 video clip, we compress it by 4 times in the temporal dimension and 8 times in the spatial dimensions (height and width). This allows us to represent the clip using only 256x5 tokens. The GIFs above show the reconstruction quality of videos from the WebVid dataset after compression by our tokenizer. 
           </p>
         </div>
         <!--/ Reconstructed videos using the discrete video tokenizer -->
